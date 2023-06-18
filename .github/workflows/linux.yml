@@ -1,0 +1,71 @@
+name: Build linux project
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - { os: ubuntu-latest }
+
+    name: "Build - ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - run: bazel build //... -k
+    - run: bazel test //... -k
+  
+    # Debugging cc_import
+    - name: "cc_import ldd"
+      run: ldd ./bazel-bin/cc_import/test
+      if: ${{ always() }}
+
+    - name: "cc_import linker params"
+      run: cat ./bazel-bin/cc_import/test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_import manifest"
+      run: cat ./bazel-bin/cc_import/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  ./bazel-bin/cc_import/test
+      if: ${{ always() }}
+  
+    # Debugging cc_library
+    - name: "cc_library ldd"
+      run: ldd ./bazel-bin/cc_library/test
+      if: ${{ always() }}
+
+    - name: "cc_library linker params"
+      run: cat ./bazel-bin/cc_library/test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_library manifest"
+      run: cat ./bazel-bin/cc_library/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  ./bazel-bin/cc_library/test
+      if: ${{ always() }}
+
+    # Debugging opencv
+    - name: "ldd opencv"
+      run: ldd ./bazel-bin/other_library_works/test
+      if: ${{ always() }}
+
+    - name: "opencv linker params"
+      run: cat ./bazel-bin/other_library_works/test-2.params
+      if: ${{ always() }}
+
+    - name: "opencv manifest"
+      run: cat ./bazel-bin/other_library_works/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  ./bazel-bin/other_library_works/test
+      if: ${{ always() }}
+
+

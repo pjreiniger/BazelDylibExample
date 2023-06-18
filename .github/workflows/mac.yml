@@ -1,0 +1,82 @@
+name: Build macos project
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - { os: macos-latest }
+
+    name: "Build - ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - run: bazel build //... -k
+    - run: bazel test //... -k
+  
+    # Debugging cc_import
+    - name: "cc_import otool -L"
+      run: otool -L ./bazel-bin/cc_import/test
+      if: ${{ always() }}
+
+    - name: "cc_import otool -l"
+      run: otool -l ./bazel-bin/cc_import/test
+      if: ${{ always() }}
+
+    - name: "cc_import linker params"
+      run: cat ./bazel-bin/cc_import/test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_import manifest"
+      run: cat ./bazel-bin/cc_import/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_import/test
+      if: ${{ always() }}
+  
+    # Debugging cc_library
+    - name: "cc_library otool -L"
+      run: otool -L ./bazel-bin/cc_library/test
+      if: ${{ always() }}
+
+    - name: "cc_library otool -l"
+      run: otool -l ./bazel-bin/cc_library/test
+      if: ${{ always() }}
+
+    - name: "cc_library linker params"
+      run: cat ./bazel-bin/cc_library/test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_library manifest"
+      run: cat ./bazel-bin/cc_library/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_library/test
+      if: ${{ always() }}
+
+    # Debugging opencv
+    - name: "opencv otool -L"
+      run: otool -L ./bazel-bin/other_library_works/test
+      if: ${{ always() }}
+
+    - name: "opencv otool -l"
+      run: otool -l ./bazel-bin/other_library_works/test
+      if: ${{ always() }}
+
+    - name: "opencv linker params"
+      run: cat ./bazel-bin/other_library_works/test-2.params
+      if: ${{ always() }}
+
+    - name: "opencv manifest"
+      run: cat ./bazel-bin/other_library_works/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/other_library_works/test
+      if: ${{ always() }}
+
