@@ -19,6 +19,7 @@ jobs:
     - uses: actions/checkout@v3
     - run: bazel build //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
     - run: bazel test //... -k  --copt=-Wno-deprecated-anon-enum-enum-conversion
+      if: ${{ always() }}
   
     # Debugging cc_import
     - name: "cc_import otool -L"
@@ -80,3 +81,24 @@ jobs:
     - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/other_library_works/test
       if: ${{ always() }}
 
+
+
+    # Debugging goal
+    - name: "goal otool -L"
+      run: otool -L ./bazel-bin/goal/test
+      if: ${{ always() }}
+
+    - name: "goal otool -l"
+      run: otool -l ./bazel-bin/goal/test
+      if: ${{ always() }}
+
+    - name: "goal linker params"
+      run: cat ./bazel-bin/goal/test-2.params
+      if: ${{ always() }}
+
+    - name: "goal manifest"
+      run: cat ./bazel-bin/goal/test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/goal/test
+      if: ${{ always() }}

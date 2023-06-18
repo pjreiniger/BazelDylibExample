@@ -12,7 +12,8 @@ cc_import(
     linkopts = select({
         "@bazel_tools//src/conditions:darwin": ["-install_name", "-id", "@rpath/libwpiutil.dylib", "./libwpiutil.dylib"],
         "//conditions:default": [],
-    })
+    }),
+    alwayslink=1,
 )
 
 cc_test(
