@@ -10,7 +10,7 @@ cc_import(
         "@bazelrio_edu_wpi_first_wpiutil_wpiutil-cpp_headers//:headers",
     ],
     linkopts = select({
-        "@bazel_tools//src/conditions:darwin": "install_name_tool -id @rpath/libwpiutil.dylib libwpiutil.dylib",
+        "@bazel_tools//src/conditions:darwin": ["install_name -id @rpath/libwpiutil.dylib libwpiutil.dylib"],
         "//conditions:default": [],
     })
 )
