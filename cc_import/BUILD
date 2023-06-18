@@ -1,7 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_import", "cc_test")
 
 cc_import(
-    name = "wpiutil",
+    name = "wpiutil_import",
     shared_library = select({
         "@bazel_tools//src/conditions:darwin": "libwpiutil.dylib",
         "@bazel_tools//src/conditions:linux_x86_64": "libwpiutil.so",
@@ -9,11 +9,16 @@ cc_import(
     deps = [
         "@bazelrio_edu_wpi_first_wpiutil_wpiutil-cpp_headers//:headers",
     ],
+    alwayslink=1,
+)
+
+cc_library(
+    name = "wpiutil",
     linkopts = select({
         "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib"],
         "//conditions:default": [],
     }),
-    alwayslink=1,
+    deps = [":wpiutil_import"],
 )
 
 cc_test(
