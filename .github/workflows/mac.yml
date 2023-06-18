@@ -17,8 +17,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
-    - run: bazel build //... -k
-    - run: bazel test //... -k
+    - run: bazel build //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
+    - run: bazel test //... -k  --copt=-Wno-deprecated-anon-enum-enum-conversion
   
     # Debugging cc_import
     - name: "cc_import otool -L"
