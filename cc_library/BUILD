@@ -26,6 +26,10 @@ cc_library(
 cc_test(
     name = "wpiutil_test",
     srcs = ["wpiutil_test.cc"],
+    linkopts = select({
+        "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":wpiutil",
         "@googletest//:gtest_main",
@@ -35,6 +39,13 @@ cc_test(
 cc_test(
     name = "wpinet_test",
     srcs = ["wpinet_test.cc"],
+    linkopts = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "-Wl,-install_name,@rpath/libwpiutil.dylib",
+            "-Wl,-install_name,@rpath/libwpinet.dylib",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         ":wpinet",
         "@googletest//:gtest_main",
