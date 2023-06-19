@@ -40,7 +40,7 @@ jobs:
 
         install_name_tool -id                         @rpath/libwpiutil.dylib cc_library/libwpiutil.dylib
         install_name_tool -id                         @rpath/libwpinet.dylib  cc_library/libwpinet.dylib
-        install_name_tool -change libwpiutil.dylib    @rpath/libwpiutil.dylib cc_import/libwpinet.dylib
+        install_name_tool -change libwpiutil.dylib    @rpath/libwpiutil.dylib cc_library/libwpinet.dylib
 
     - name: Post install otool
       run: |
