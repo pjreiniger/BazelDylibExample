@@ -10,7 +10,7 @@ cc_import(
         "@bazelrio_edu_wpi_first_wpiutil_wpiutil-cpp_headers//:headers",
     ],
     linkopts = select({
-        "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib"],
+        "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib,libwpiutil.dylib"],
         "//conditions:default": [],
     }),
 )
@@ -27,8 +27,8 @@ cc_import(
     ],
     linkopts = select({
         "@bazel_tools//src/conditions:darwin": [
-            "-Wl,-install_name,@rpath/libwpiutil.dylib",
-            "-Wl,-install_name,@rpath/libwpinet.dylib",
+            "-Wl,-install_name,@rpath/libwpiutil.dylib,libwpiutil.dylib",
+            "-Wl,-install_name,@rpath/libwpinet.dylib,libwpinet.dylib",
         ],
         "//conditions:default": [],
     }),
@@ -38,7 +38,7 @@ cc_test(
     name = "wpiutil_test",
     srcs = ["wpiutil_test.cc"],
     linkopts = select({
-        "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib"],
+        "@bazel_tools//src/conditions:darwin": ["-Wl,-install_name,@rpath/libwpiutil.dylib,libwpiutil.dylib"],
         "//conditions:default": [],
     }),
     deps = [
@@ -52,8 +52,8 @@ cc_test(
     srcs = ["wpinet_test.cc"],
     linkopts = select({
         "@bazel_tools//src/conditions:darwin": [
-            "-Wl,-install_name,@rpath/libwpiutil.dylib",
-            "-Wl,-install_name,@rpath/libwpinet.dylib",
+            "-Wl,-install_name,@rpath/libwpiutil.dylib,libwpiutil.dylib",
+            "-Wl,-install_name,@rpath/libwpinet.dylib,libwpinet.dylib",
         ],
         "//conditions:default": [],
     }),
