@@ -48,6 +48,7 @@ http_archive(
     build_file_content = SHARED_LIBRARY_BUILD_FILE,
     sha256 = "1f7568fdbeb0cd00940f0e15b051095811ce7db4e2a46a4bc2ef652b81bea463",
     url = "https://frcmaven.wpi.edu/release/edu/wpi/first/wpiutil/wpiutil-cpp/2023.3.2/wpiutil-cpp-2023.3.2-osxuniversal.zip",
+    patch_cmds = ["install_name_tool -id @rpath/libwpiutil.dylib osx/unviversal/shared/libwpiutil.dylib"],
 )
 
 # wpinet
@@ -70,6 +71,7 @@ http_archive(
     build_file_content = SHARED_LIBRARY_BUILD_FILE,
     sha256 = "a327ee0e4b084d8d59bde460cc4edcd210a15264a9c50737515599ebec51e6bd",
     url = "https://frcmaven.wpi.edu/release/edu/wpi/first/wpinet/wpinet-cpp/2023.3.2/wpinet-cpp-2023.3.2-osxuniversal.zip",
+    patch_cmds = ["install_name_tool -id @rpath/libwpinet.dylib osx/unviversal/shared/libwpinet.dylib"],
 )
 
 # OpenCV
