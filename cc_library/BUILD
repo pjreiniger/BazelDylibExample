@@ -39,4 +39,5 @@ cc_test(
         ":wpinet",
         "@googletest//:gtest_main",
     ],
+    tags = ["no-sandbox"]
 )
