@@ -10,6 +10,7 @@ cc_library(
     deps = [
         "@bazelrio_edu_wpi_first_wpiutil_wpiutil-cpp_headers//:headers",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -23,6 +24,7 @@ cc_library(
         ":wpiutil",
         "@bazelrio_edu_wpi_first_wpinet_wpinet-cpp_headers//:headers",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
