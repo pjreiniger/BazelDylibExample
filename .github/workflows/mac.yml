@@ -21,9 +21,12 @@ jobs:
     - name: "install_name_tool"
       run: | 
         install_name_tool -id @rpath/libwpiutil.dylib cc_import/libwpiutil.dylib
-        install_name_tool -id @rpath/libwpinet.dylib cc_import/libwpinet.dylib
+        install_name_tool -id @rpath/libwpinet.dylib  cc_import/libwpinet.dylib
+        install_name_tool -id @rpath/libwpiutil.dylib cc_import/libwpinet.dylib
+
         install_name_tool -id @rpath/libwpiutil.dylib cc_library/libwpiutil.dylib
-        install_name_tool -id @rpath/libwpinet.dylib cc_library/libwpinet.dylib
+        install_name_tool -id @rpath/libwpinet.dylib  cc_library/libwpinet.dylib
+        install_name_tool -id @rpath/libwpiutil.dylib cc_library/libwpinet.dylib
 
     - run: bazel build //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
     - run: bazel test //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
