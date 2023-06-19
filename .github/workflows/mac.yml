@@ -33,6 +33,26 @@ jobs:
   
     # Debugging cc_import
     - name: "cc_import otool -L"
+      run: otool -L ./bazel-bin/cc_import/wpiutil_test
+      if: ${{ always() }}
+
+    - name: "cc_import otool -l"
+      run: otool -l ./bazel-bin/cc_import/wpiutil_test
+      if: ${{ always() }}
+
+    - name: "cc_import linker params"
+      run: cat ./bazel-bin/cc_import/wpiutil_test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_import manifest"
+      run: cat ./bazel-bin/cc_import/wpiutil_test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_import/wpiutil_test
+      if: ${{ always() }}
+  
+    # Debugging cc_import
+    - name: "cc_import otool -L"
       run: otool -L ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
 
@@ -69,6 +89,26 @@ jobs:
       if: ${{ always() }}
 
     - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_library/wpinet_test
+      if: ${{ always() }}
+  
+    # Debugging cc_library
+    - name: "cc_library otool -L"
+      run: otool -L ./bazel-bin/cc_library/wpiutil_test
+      if: ${{ always() }}
+
+    - name: "cc_library otool -l"
+      run: otool -l ./bazel-bin/cc_library/wpiutil_test
+      if: ${{ always() }}
+
+    - name: "cc_library linker params"
+      run: cat ./bazel-bin/cc_library/wpiutil_test-2.params
+      if: ${{ always() }}
+
+    - name: "cc_library manifest"
+      run: cat ./bazel-bin/cc_library/wpiutil_test.runfiles_manifest
+      if: ${{ always() }}
+
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_library/wpiutil_test
       if: ${{ always() }}
 
     # Debugging opencv
