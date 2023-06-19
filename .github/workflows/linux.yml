@@ -22,34 +22,34 @@ jobs:
   
     # Debugging cc_import
     - name: "cc_import ldd"
-      run: ldd ./bazel-bin/cc_import/test
+      run: ldd ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_import linker params"
-      run: cat ./bazel-bin/cc_import/test-2.params
+      run: cat ./bazel-bin/cc_import/wpinet_test-2.params
       if: ${{ always() }}
 
     - name: "cc_import manifest"
-      run: cat ./bazel-bin/cc_import/test.runfiles_manifest
+      run: cat ./bazel-bin/cc_import/wpinet_test.runfiles_manifest
       if: ${{ always() }}
 
-    - run:  ./bazel-bin/cc_import/test
+    - run:  ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
   
     # Debugging cc_library
     - name: "cc_library ldd"
-      run: ldd ./bazel-bin/cc_library/test
+      run: ldd ./bazel-bin/cc_library/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_library linker params"
-      run: cat ./bazel-bin/cc_library/test-2.params
+      run: cat ./bazel-bin/cc_library/wpinet_test-2.params
       if: ${{ always() }}
 
     - name: "cc_library manifest"
-      run: cat ./bazel-bin/cc_library/test.runfiles_manifest
+      run: cat ./bazel-bin/cc_library/wpinet_test.runfiles_manifest
       if: ${{ always() }}
 
-    - run:  ./bazel-bin/cc_library/test
+    - run:  ./bazel-bin/cc_library/wpinet_test
       if: ${{ always() }}
 
     # Debugging opencv

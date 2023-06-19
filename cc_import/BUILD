@@ -11,11 +11,32 @@ cc_import(
     ],
 )
 
-cc_test(
-    name = "test",
-    srcs = ["test.cc"],
+cc_import(
+    name = "wpinet",
+    shared_library = select({
+        "@bazel_tools//src/conditions:darwin": "libwpinet.dylib",
+        "@bazel_tools//src/conditions:linux_x86_64": "libwpinet.so",
+    }),
     deps = [
         ":wpiutil",
+        "@bazelrio_edu_wpi_first_wpinet_wpinet-cpp_headers//:headers",
+    ],
+)
+
+cc_test(
+    name = "wpiutil_test",
+    srcs = ["wpiutil_test.cc"],
+    deps = [
+        ":wpiutil",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "wpinet_test",
+    srcs = ["wpinet_test.cc"],
+    deps = [
+        ":wpinet",
         "@googletest//:gtest_main",
     ],
 )

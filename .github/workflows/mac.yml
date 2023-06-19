@@ -17,47 +17,47 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
-    - run: bazel build //... -k
-    - run: bazel test //... -k
+    - run: bazel build //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
+    - run: bazel test //... -k --copt=-Wno-deprecated-anon-enum-enum-conversion
   
     # Debugging cc_import
     - name: "cc_import otool -L"
-      run: otool -L ./bazel-bin/cc_import/test
+      run: otool -L ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_import otool -l"
-      run: otool -l ./bazel-bin/cc_import/test
+      run: otool -l ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_import linker params"
-      run: cat ./bazel-bin/cc_import/test-2.params
+      run: cat ./bazel-bin/cc_import/wpinet_test-2.params
       if: ${{ always() }}
 
     - name: "cc_import manifest"
-      run: cat ./bazel-bin/cc_import/test.runfiles_manifest
+      run: cat ./bazel-bin/cc_import/wpinet_test.runfiles_manifest
       if: ${{ always() }}
 
-    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_import/test
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_import/wpinet_test
       if: ${{ always() }}
   
     # Debugging cc_library
     - name: "cc_library otool -L"
-      run: otool -L ./bazel-bin/cc_library/test
+      run: otool -L ./bazel-bin/cc_library/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_library otool -l"
-      run: otool -l ./bazel-bin/cc_library/test
+      run: otool -l ./bazel-bin/cc_library/wpinet_test
       if: ${{ always() }}
 
     - name: "cc_library linker params"
-      run: cat ./bazel-bin/cc_library/test-2.params
+      run: cat ./bazel-bin/cc_library/wpinet_test-2.params
       if: ${{ always() }}
 
     - name: "cc_library manifest"
-      run: cat ./bazel-bin/cc_library/test.runfiles_manifest
+      run: cat ./bazel-bin/cc_library/wpinet_test.runfiles_manifest
       if: ${{ always() }}
 
-    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_library/test
+    - run:  DYLD_PRINT_LIBRARIES=1 ./bazel-bin/cc_library/wpinet_test
       if: ${{ always() }}
 
     # Debugging opencv
