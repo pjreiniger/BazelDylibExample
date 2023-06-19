@@ -22,7 +22,7 @@ SHARED_LIBRARY_BUILD_FILE = """filegroup(
         "**/*.so*", 
         "**/*.dylib",
     ], exclude=[
-        "**/*.jni.dylib",
+        "**/*jni.dylib",
         "**/lib*_java*.dylib",
     ]),
     visibility = ["//visibility:public"],
